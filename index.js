@@ -11,40 +11,40 @@ const displayWorkoutRoutine = () => {
     newWorkout.textContent = workoutInput;
     workoutList.appendChild(newWorkout);
 };
-
 document.querySelector('#submitWorkout').addEventListener('click', displayWorkoutRoutine);
 
-// ⚠️⚠️⚠️ Lesson 3: Creating and Removing Elements ⚠️⚠️⚠️
-// Function to add new fitness goals and remove completed ones
-// NOW LET'S DEBUG TO PREVENT DUPLICATE GOALS FROM BEING SUBMITTED 🚀
-
+// ⚠️⚠️⚠️ JSL02 ⚠️⚠️⚠️
 const addNewGoal = () => {
     const goalInput = document.querySelector('#goalInput').value;
     const goalList = document.querySelector('#goalList');
-    
-    // ⚠️ Hint 1: Check for duplicates
-    // Use 'goalList' to get all existing goals and check if 'goalInput' matches any of them.
-    
-    // ⚠️ Hint 2: Prevent duplicates
-    // If a duplicate is found, display an alert to the user and don't add the goal to the list.
-    // If it's not a duplicate, proceed with adding it as a new goal.
-    
-    // ⚠️ Hint 3: Code structure
-    // You might want to wrap the duplicate-checking logic in an 'if' statement.
-    
-    // ⚠️ Hint 4: Event listener
-    // The event listener that removes goals when clicked is not related to this issue.
-    // Focus on preventing duplicates for now.
-    
-    const newGoal = document.createElement('li');
-    newGoal.textContent = goalInput;
-    goalList.appendChild(newGoal);
-};
+    const listItems = goalList.querySelectorAll('li'); //A variable looking at all the list items of the goalList
 
+    let matchFound = false; //By default no matches are found hence why it is set to false
+    //Here we check each item of the listItems variable and using an if statment to change matchfound from false to true if any item's
+    //text content matches the goalInput
+    //Uing a for loop we can easlity go over all the list items 1 by 1 and compare them to the goalInput, and the break exits the function
+    //once a match is found
+    for (let i = 0; i < listItems.length; i++) {
+        if (listItems[i].textContent === goalInput) {
+            matchFound = true;
+            break; //we use break to exit the function if match is found or when all items in the list has been looped
+        }
+    }
+    //Now that we have checked if there are any matching items in the list to te goalInput, we write an if statement with 2 actions
+    //1. if matchfound equals to true then an alert is issued
+    //2. else the goal is appended as a child as normal
+    if (matchFound === true) {
+        alert("Goal already exists!");
+    } else {
+        const newGoal = document.createElement('li');
+        newGoal.textContent = goalInput;
+        goalList.appendChild(newGoal);
+    }
+};
 // Add event listener to the goal submit button
 document.querySelector('#submitGoal').addEventListener('click', addNewGoal);
+// ⚠️⚠️⚠️ JSL02 ⚠️⚠️⚠️
 
-///
 let waterIntake = 0;
 const updateWaterIntake = (change) => {
     waterIntake += change;
